@@ -1,8 +1,9 @@
 {
-    "email":"",
-    "pwd":"",
-    "concert":"",
-    "zone":"",
-    "show":"",
-    "seats":""
+    "email": "your-email@example.com",
+    "pwd": "your-password",
+    "concert": "TRINITY PREMIERE SHOWCASE",
+    "zone": "BR",
+    "show": "1",
+    "seats": "2",
+    "website": "thaiticketmajor"
 }
