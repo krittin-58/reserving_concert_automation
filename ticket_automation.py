@@ -126,6 +126,16 @@ def main():
     print("🎫 Multi-Website Ticket Booking Automation")
     print("=" * 50)
     
+    # Add testing mode argument
+    import argparse
+    parser = argparse.ArgumentParser(description='Ticket booking automation')
+    parser.add_argument('--dry-run', action='store_true', help='Test mode without actual booking')
+    parser.add_argument('--verbose', action='store_true', help='Verbose logging')
+    parser.add_argument('--timeout', type=int, default=30, help='Timeout in seconds')
+    parser.add_argument('--website', help='Website to use')
+    
+    args = parser.parse_args()
+    
     # Show supported websites
     print("Supported websites:")
     for key, value in WEBSITES.items():
@@ -133,14 +143,25 @@ def main():
     print()
     
     # Get website choice
-    website = input("Enter website name: ").strip().lower()
+    if args.website:
+        website = args.website.lower()
+    else:
+        website = input("Enter website name: ").strip().lower()
     
     if not website:
         print("No website specified. Using default: thaiticketmajor")
         website = "thaiticketmajor"
     
+    if args.dry_run:
+        print("⚠️ DRY RUN MODE: No actual booking will be performed")
+    
     # Run automation
     automation = TicketBookingAutomation(website)
+    
+    # Apply test settings
+    if hasattr(automation, 'set_test_mode'):
+        automation.set_test_mode(args.dry_run, args.verbose, args.timeout)
+    
     automation.run_booking_process()
 
 
